@@ -19,11 +19,13 @@ before_install:
   - cd webanalyzer
 
 install:
+  - pip install twine
   - wget https://raw.githubusercontent.com/AliasIO/Wappalyzer/master/src/apps.json
   - git clone -b master --depth=2 https://github.com/urbanadventurer/WhatWeb
   - python tools/wappalyzer.py
   - ruby tools/whatweb.rb
+  - git checkout webanalyzer/plugins/whatweb/fortinet-firewall.json
   - git add webanalyzer/plugins
-  - git commit -m "auto update plugins"
-  - git push -u origin master
+  - git commit -m "auto update plugins" || true
+  - git push -u origin master || true
   - python deploy.py
