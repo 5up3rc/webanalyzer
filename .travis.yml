@@ -2,27 +2,29 @@ language: python
 python: "3.6"
 branches:
   only:
-  - master
+  - build
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_4c29656f38dc_key -iv $encrypted_4c29656f38dc_iv
     -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  - openssl aes-256-cbc -K $encrypted_4c29656f38dc_key -iv $encrypted_4c29656f38dc_iv
+    -in .pypirc.enc -out ~/.pypirc -d
   - chmod 600 ~/.ssh/id_rsa
   - eval $(ssh-agent)
   - ssh-add ~/.ssh/id_rsa
   - cp ssh_config ~/.ssh/config
   - git config --global user.name "fate0"
   - git config --global user.email "git@fatezero.org"
+  - git clone --depth=2 git@github.com:fate0/webanalyzer.git
+  - cd webanalyzer
 
 install:
   - wget https://raw.githubusercontent.com/AliasIO/Wappalyzer/master/src/apps.json
   - git clone -b master --depth=2 https://github.com/urbanadventurer/WhatWeb
   - python tools/wappalyzer.py
   - ruby tools/whatweb.rb
-
-script:
-  - git remote rm origin
-  - git remote add origin git@github.com:fate0/webanalyzer.git
+  - git checkout webanalyzer/plugins/whatweb/fortinet-firewall.json
   - git add webanalyzer/plugins
   - git commit -m "auto update plugins"
   - git push -u origin master
+  - python deploy.py
