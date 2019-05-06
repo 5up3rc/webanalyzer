@@ -23,7 +23,6 @@ install:
   - git clone -b master --depth=2 https://github.com/urbanadventurer/WhatWeb
   - python tools/wappalyzer.py
   - ruby tools/whatweb.rb
-  - git checkout webanalyzer/plugins/whatweb/fortinet-firewall.json
   - git add webanalyzer/plugins
   - git commit -m "auto update plugins"
   - git push -u origin master
