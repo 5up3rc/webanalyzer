@@ -1,9 +1,0 @@
-{
-    "name": "Shopify",
-    "website": "http://shopify.com",
-    "matches": [
-        {
-            "regexp": "<link[^>]+=['\"]//cdn\\.shopify\\.com"
-        }
-    ]
-}
